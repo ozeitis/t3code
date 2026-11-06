@@ -353,6 +353,7 @@ export interface ThreadListV2ThreadListItem {
   readonly hasQueuedMessages: boolean;
   readonly canMoveUp: boolean;
   readonly canMoveDown: boolean;
+  readonly inFolder?: true;
 }
 
 export interface ThreadListV2PendingListItem {
@@ -455,7 +456,8 @@ export function threadListV2ListItemsAreEqual(
         previous.showTrailingDivider === item.showTrailingDivider &&
         previous.hasQueuedMessages === item.hasQueuedMessages &&
         previous.canMoveUp === item.canMoveUp &&
-        previous.canMoveDown === item.canMoveDown
+        previous.canMoveDown === item.canMoveDown &&
+        previous.inFolder === item.inFolder
       );
     case "v2-pending":
       return (
@@ -559,7 +561,7 @@ export function groupThreadListV2ByProject(input: {
         expanded ||
         `${row.item.thread.environmentId}:${row.item.thread.id}` === input.selectedThreadKey
       ) {
-        result.push({ ...row, canMoveUp: false, canMoveDown: false });
+        result.push({ ...row, canMoveUp: false, canMoveDown: false, inFolder: true });
       }
     }
   }
